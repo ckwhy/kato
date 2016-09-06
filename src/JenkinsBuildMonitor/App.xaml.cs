@@ -34,7 +34,7 @@ namespace Kato
 				App application = new App();
 				application.InitializeComponent();
 				application.Run();
-
+                
 				// Allow single instance code to perform cleanup operations
 				s_log.Info("Cleaning up single instance app...");
 				SingleInstance<App>.Cleanup();
@@ -57,5 +57,21 @@ namespace Kato
 		public static string AppVersion = "1.0";
 		public const string AppName = "Kato";
 		static ILog s_log;
-	}
+
+        private void Application_Activated(object sender, EventArgs e)
+        {
+            MainWindow.Width = System.Windows.SystemParameters.PrimaryScreenWidth;
+            MainWindow.Height = System.Windows.SystemParameters.PrimaryScreenHeight;
+            MainWindow.Topmost = true;
+            MainWindow.Top = 0;
+            MainWindow.Left = 0;
+            
+        }
+
+        private void Application_Deactivated(object sender, EventArgs e)
+        {
+            MainWindow.Topmost = true;
+            MainWindow.Activate();
+        }
+    }
 }
